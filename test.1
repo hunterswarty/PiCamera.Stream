@@ -25,8 +25,8 @@ class CameraControl:
         self.hdr = False  # Initial HDR (off)
 
         # Initialize video recording
-        self.encoder = H264Encoder(bitrate=1000000)
-        self.output = FileOutput("/path/to/output.h264")  # Adjust this path as needed
+        self.encoder = H264Encoder(bitrate=5000000)
+        self.output = FileOutput(stream)  # Adjust this path as needed
         self.camera.start_recording(self.encoder, self.output)
 
     def adjust_gain(self, increase=True):
@@ -57,7 +57,7 @@ class CameraControl:
         self.camera.stop()
 
 class CameraServer:
-    def __init__(self, ip='0.0.0.0', port=65432, tuning_file_path='/usr/share/libcamera/ipa/rpi/pisp/arducam_64mp.json'):
+    def __init__(self, ip='0.0.0.0', port=8888, tuning_file_path='/usr/share/libcamera/ipa/rpi/pisp/arducam_64mp.json'):
         self.camera_control = CameraControl(tuning_file_path)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.bind((ip, port))
